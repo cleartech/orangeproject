@@ -356,7 +356,7 @@ background-size:cover;"/>
                             <p></p>
                             <h6>
                                 <spring:message code="albums_label"/>&nbsp<span
-                                    class="badge">${fn:length(albums)}</span>
+                                    class="badge">${albums}</span>
                             </h6>
                             <br>
                             <a href="/albums/page/1" class="btn btn-active"><spring:message code="go_to_albums"/></a>
@@ -375,7 +375,7 @@ background-size:cover;"/>
                         <div class="panel-body">
                             <h6><spring:message code="exchange_messages"/></h6>
                             <p></p>
-                            <h6><spring:message code="messages"/>&nbsp<span class="badge">${fn:length(inbox)}</span>
+                            <h6><spring:message code="messages"/>&nbsp<span class="badge">${inbox}</span>
                                 <c:if test="${inboxUnread gt 0}">
                                     <span class="label label-success">new</span>
                                 </c:if>
@@ -418,7 +418,7 @@ background-size:cover;"/>
                             <h6><spring:message code="your_favorites"/></h6>
                             <p></p>
                             <h6><spring:message code="favorites"/>&nbsp<span
-                                    class="badge">${fn:length(favorites)}</span></h6>
+                                    class="badge">${favorites}</span></h6>
                             <br>
                             <a href="/favorites/page/1" class="btn btn-active"><spring:message
                                     code="go_to_favorites"/></a>

@@ -57,10 +57,10 @@ public class MyController {
                 model.addAttribute("login", login);
                 model.addAttribute("roles", user.getAuthorities());
 
-                model.addAttribute("albums", dbUser.getAlbums());
-                model.addAttribute("inbox", messageService.getInboxList(dbUser));
+                model.addAttribute("albums", dbUser.getUserAlbumsQty());
+                model.addAttribute("inbox", messageService.getUserInboxSize(dbUser));
                 model.addAttribute("inboxUnread", dbUser.getUnreadInbox());
-                model.addAttribute("favorites", dbUser.getFavoriteList());
+                model.addAttribute("favorites", dbUser.getUserFavoritesQty());
                 model.addAttribute("commentsTotal", commentsTotal);
             }
         }
@@ -170,8 +170,8 @@ public class MyController {
             return "/user_not_found";
         }
 
-        model.addAttribute("albums", dbUser.getAlbums());
-        model.addAttribute("items", dbUser.getOrangeItems());
+        model.addAttribute("albums", dbUser.getUserAlbumsQty());
+        model.addAttribute("items", dbUser.getUserPhotosQty());
         model.addAttribute("registrationDate", dbUser.getRegistrationDate());
         model.addAttribute("targetLogin", login);
 

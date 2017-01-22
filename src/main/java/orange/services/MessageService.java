@@ -23,4 +23,6 @@ public interface MessageService {
     Page<OrangeMessage> getOutboxMessages(CustomUser user, int pageNumber);
 
     List<OrangeMessage> getInboxList(CustomUser user);
+
+    int getUserInboxSize(CustomUser user);
 }

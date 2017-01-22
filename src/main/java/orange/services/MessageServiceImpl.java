@@ -71,4 +71,10 @@ public class MessageServiceImpl implements MessageService {
     public List<OrangeMessage> getInboxList(CustomUser user) {
         return messageRepository.getInboxList(user);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getUserInboxSize(CustomUser user) {
+        return messageRepository.getInboxSize(user);
+    }
 }

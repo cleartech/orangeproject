@@ -29,4 +29,8 @@ public interface OrangeMessageRepository extends JpaRepository<OrangeMessage, In
     @Query("SELECT m FROM OrangeMessage m WHERE m.userTo =:userTo AND m.messageType = 'inbox'")
     List<OrangeMessage> getInboxList(
             @Param("userTo") CustomUser userTo);
+
+    @Query("SELECT COUNT (m) FROM OrangeMessage m WHERE m.userTo =:userTo AND m.messageType = 'inbox'")
+    int getInboxSize(
+            @Param("userTo") CustomUser userTo);
 }

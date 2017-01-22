@@ -56,6 +56,22 @@ public class CustomUser {
         this.registrationDate = registrationDate;
     }
 
+    public int getUserPhotosQty() {
+        return orangeItems.size();
+    }
+
+    public int getUserAlbumsQty() {
+        return albums.size();
+    }
+
+    public int getUserInboxMessagesQty() {
+        return inBox.size();
+    }
+
+    public int getUserFavoritesQty() {
+        return favoriteList.size();
+    }
+
     public List<OrangeItem> getFavoriteList() {
         return favoriteList;
     }

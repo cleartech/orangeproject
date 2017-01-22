@@ -261,8 +261,8 @@
                                 pattern="dd.MM.yyyy"
                                 var="registrationDate"/>
                 <spring:message code="citizen_since"/>: ${registrationDate}<br/>
-                <spring:message code="albums"/>: ${fn:length(albums)}<br/>
-                <spring:message code="photos"/>: ${fn:length(items)}
+                <spring:message code="albums"/>: ${albums}<br/>
+                <spring:message code="photos"/>: ${items}
             </h5>
             <div class="panel-body" align="right" style="margin-bottom: -1.5em; margin-right: -.5em;">
                 <a href="#" class="btn btn-active" onclick="window.location='/${targetLogin}/albums/page/1';">
