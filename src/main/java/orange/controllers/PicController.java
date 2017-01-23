@@ -44,16 +44,16 @@ public class PicController {
     private static final long KiB = 1024;
 
     @RequestMapping(value = "/add_photo", method = RequestMethod.POST)
-    public String addPhoto(Model model, @RequestParam("photo") MultipartFile pic ) throws IOException {
+    public String addPhoto(Model model, @RequestParam("photo") MultipartFile pic) throws IOException {
 
-        if(pic.isEmpty()) {
+        if (pic.isEmpty()) {
             model.addAttribute("emptyPic", true);
             return "redirect:/";
         }
 
-        if(!isImageFile(pic)) {
+        if (!isImageFile(pic)) {
             model.addAttribute("notSupported", true);
-                return "redirect:/";
+            return "redirect:/";
         }
 
         File file = new File(pic.getOriginalFilename());
@@ -63,7 +63,7 @@ public class PicController {
         item.setuId(getUUID());
         item.setName(file.getName());
         item.setSize(pic.getSize());
-        if(pic.getSize() > 2097152) {
+        if (pic.getSize() > 2097152) {
             model.addAttribute("sizeLimit", true);
             return "redirect:/";
         }
@@ -81,11 +81,7 @@ public class PicController {
         model.addAttribute("item", item);
         model.addAttribute("name", file.getName());
         model.addAttribute("type", pic.getContentType());
-//        try {
-            model.addAttribute("size", getFileSize(pic));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        model.addAttribute("size", getFileSize(pic));
         model.addAttribute("dimension", img.getWidth() + "x" + img.getHeight());
 
         orangeItemService.addOrangeItem(item);
@@ -95,6 +91,7 @@ public class PicController {
 
     /**
      * Getting image for thumbnail view anywhere it needed
+     *
      * @param uid item uid
      * @return image for placing
      */
@@ -103,21 +100,14 @@ public class PicController {
         return itemByUid(uid);
     }
 
-//    @RequestMapping(value = "/view-fullsize/{uid}", method = RequestMethod.GET)
-//    public ModelAndView onFullSizePhoto(@PathVariable("uid") String uid) {
-//        return new ModelAndView("single-pic-view-fullsize", "img", itemByUid(uid));
-//    }
-
     /**
      * Getting image as byte array
+     *
      * @param uid image uid
      * @return byte array
      */
     private ResponseEntity<byte[]> itemByUid(String uid) {
         OrangeItem item = orangeItemService.getByUid(uid);
-//        byte[] bytes = orangeItemService.getByUid(uid);
-//        if (bytes == null)
-//            throw new PhotoNotFoundException();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
@@ -128,9 +118,6 @@ public class PicController {
     @RequestMapping("/download/{uid}")
     public ResponseEntity<byte[]> downloadSingle(@PathVariable("uid") String uid) {
         OrangeItem item = orangeItemService.getByUid(uid);
-//        File temp = null;
-//        FileUtils.writeByteArrayToFile(temp, item.getImage());
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
         headers.setContentDispositionFormData("attachment", item.getName());
@@ -162,14 +149,11 @@ public class PicController {
             User user = (User) auth.getPrincipal();
             String login = user.getUsername();
             CustomUser dbUser = userService.getUserByLogin(login);
-//            dbUser.addToFavorite(item);
             item.addUserToAddedList(dbUser);
-//            item.addUserToFavoriteList(dbUser);
             userService.updateUser(dbUser);
-//            orangeItemService.updateOrangeItem(item);
             model.addAttribute("item", item);
         }
-            return "redirect:/view-album-item/" + itemUid + "/" + currentIndex;
+        return "redirect:/view-album-item/" + itemUid + "/" + currentIndex;
     }
 
     @RequestMapping(value = "/remove-from-favorites/{itemUid}/{currentIndex}", method = RequestMethod.GET)
@@ -185,11 +169,8 @@ public class PicController {
             User user = (User) auth.getPrincipal();
             String login = user.getUsername();
             CustomUser dbUser = userService.getUserByLogin(login);
-//            dbUser.removeFromFavorite(item);
             item.removeUserFromAddedList(dbUser);
-//            item.removeUserFromFavoriteList(dbUser);
             userService.updateUser(dbUser);
-//            orangeItemService.updateOrangeItem(item);
             model.addAttribute("item", item);
             model.addAttribute("currentIndex", currentIndex);
         }
@@ -198,6 +179,7 @@ public class PicController {
 
     /**
      * Remove item from Favorites list on Favorites page
+     *
      * @param currentIndex
      * @param itemUid
      * @return
@@ -212,11 +194,8 @@ public class PicController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
         CustomUser dbUser = userService.getUserByLogin(user.getUsername());
-//        dbUser.removeFromFavorite(item);
         item.removeUserFromAddedList(dbUser);
-//        item.removeUserFromFavoriteList(dbUser);
         userService.updateUser(dbUser);
-//        orangeItemService.updateOrangeItem(item);
 
         return "redirect:/favorites/page/" + currentIndex;
     }
@@ -226,13 +205,6 @@ public class PicController {
             @PathVariable String itemUid
     ) {
         OrangeItem deleteItem = orangeItemService.getByUid(itemUid);
-        /////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////
-//        for(CustomUser user: deleteItem.getAddedUsers()) {
-//            user.getFavoriteList().remove(deleteItem);
-//        }
-        /////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////
         orangeItemService.deleteOrangeItem(deleteItem);
 
         return "redirect:/";
@@ -240,7 +212,7 @@ public class PicController {
 
     private String getFileExtension(File file) {
         String fileName = file.getName();
-        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
             return fileName.substring(fileName.lastIndexOf(".") + 1);
         else return "";
     }
@@ -251,19 +223,16 @@ public class PicController {
         }
         String contentType = file.getContentType();
         return
-//                contentType.equals("image/pjpeg") ||
                 contentType.equals("image/jpeg") ||
-                contentType.equals("image/png") ||
-                contentType.equals("image/gif");/* ||
-//                contentType.equals("image/bmp");/* ||
-                contentType.equals("image/x-png");*/
+                        contentType.equals("image/png") ||
+                        contentType.equals("image/gif");
     }
 
     private String getUUID() {
         return UUID.randomUUID().toString();
     }
 
-    private String getFileSize(MultipartFile file){
+    private String getFileSize(MultipartFile file) {
 
         final double length = file.getSize();
 
