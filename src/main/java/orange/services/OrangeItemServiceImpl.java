@@ -23,7 +23,7 @@ public class OrangeItemServiceImpl implements OrangeItemService {
     private static final int ALBUMS_PAGE_SIZE = 12;
     private static final int COMMENTS_PAGE_SIZE = 20;
     private static final int FAVORITES_PAGE_SIZE = 20;
-    private static final int BROWSE_PHOTO_PAGE_SIZE = 30;
+    private static final int BROWSE_PHOTO_PAGE_SIZE = 18;
 
 
     @Override

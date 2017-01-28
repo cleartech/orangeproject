@@ -17,7 +17,7 @@ import java.util.List;
 public class AlbumServiceImpl implements AlbumService {
 
     private final static int ALBUMS_PAGE_SIZE = 12;
-    private final static int ALBUMS_VIEW_PAGE_SIZE = 6;
+    private final static int ALBUMS_BROWSE_VIEW_PAGE_SIZE = 4;
 
     @Autowired
     private AlbumRepository albumRepository;
@@ -70,7 +70,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     @Transactional(readOnly = true)
     public Page<Album> findAlbumsOrderByCreationDateDesc(int pageNumber) {
-        PageRequest pageRequest = new PageRequest(pageNumber - 1, ALBUMS_VIEW_PAGE_SIZE);
+        PageRequest pageRequest = new PageRequest(pageNumber - 1, ALBUMS_BROWSE_VIEW_PAGE_SIZE);
 
         return albumRepository.findAlbumsOrderByCreationDateDesc(pageRequest);
     }
@@ -78,7 +78,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     @Transactional(readOnly = true)
     public Page<Album> findAlbumsByCategory(AlbumCategory category, int pageNumber) {
-        PageRequest pageRequest = new PageRequest(pageNumber - 1, ALBUMS_VIEW_PAGE_SIZE);
+        PageRequest pageRequest = new PageRequest(pageNumber - 1, ALBUMS_BROWSE_VIEW_PAGE_SIZE);
 
         return albumRepository.findAlbumsByCategory(category.getName(), pageRequest);
     }
